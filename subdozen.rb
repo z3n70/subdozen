@@ -7,15 +7,18 @@ str = <<END
                      ┌─┐┬ ┬┌┐ ┌┬┐┌─┐┌─┐┌─┐┌┐┌
                      └─┐│ │├┴┐ │││ │┌─┘├┤ │││
                      └─┘└─┘└─┘─┴┘└─┘└─┘└─┘┘└┘
-                  
+                               v 0.1
                   ================================
 END
 puts str.yellow
 puts
 
-print "Enter Your Domain : "
+puts  "Example" +("             : google.com").yellow
+print "Enter Your Domain   : "
 d = gets.chomp
-headers = {
+
+puts
+   headers = {
      "apikey"     => "oSc5Ud5Vw9pQM2no5eoObwmkMLsuOyyX",
 }
 response = HTTParty.get("https://api.securitytrails.com/v1/domain/#{d}/subdomains",
