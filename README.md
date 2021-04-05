@@ -1,7 +1,5 @@
 Make subdozen with simple program
 
-#subdozen
-
 Subdozen is a tool for reconnaissance for a domain
 
 #install
