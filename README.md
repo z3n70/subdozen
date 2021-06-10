@@ -1,4 +1,3 @@
-https://ibb.co/TgNb9Y5
 
 
 Make subdozen with simple program
