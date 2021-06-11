@@ -14,7 +14,7 @@ https://www.ruby-lang.org/id/documentation/installation/
 - gem install httparty
 - gem install colorize
 
-git clone https://github.com/Zen70/subdozen
+git clone https://github.com/z3n70/subdozen
 
 cd subdozen
 
