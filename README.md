@@ -15,6 +15,7 @@ https://www.ruby-lang.org/id/documentation/installation/
 - gem install json
 - gem install httparty
 - gem install colorize
+- gem install uri
 
 git clone https://github.com/z3n70/subdozen
 
