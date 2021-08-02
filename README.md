@@ -1,4 +1,4 @@
-![Alt text](https://github.com/z3n70/subdozen/blob/main/subdozen-v2.png?raw=true "subdozen")
+![Alt text](https://github.com/z3n70/subdozen/blob/main/subdozen.png?raw=true "subdozen")
 
 Make subdozen with simple program
 
