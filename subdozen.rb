@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require 'httparty'
 require 'colorize'
 require 'json'
@@ -11,20 +13,20 @@ str = <<END
                └─┘└─┘└─┘─┴┘└─┘└─┘└─┘┘└┘
                          v 0.2
             ================================
-
+		        @z3n70
 
 END
 puts str.yellow
 puts
 puts "1. Subdomain Scanning"
-puts "2. Domain Checker"
+puts "2. Status Domain Checker"
 puts
 print "Enter Number : "
 dozen = gets.chomp
 puts
 
 if dozen == "1"
-    puts  "Example             : "+("google.com").blue
+    puts  "Example             : "+("google.com").colorize(:color => :black, :background => :white)
     print "Enter Your Domain   : "
     d = gets.chomp
     print "Enter File Name.txt : "
@@ -32,7 +34,7 @@ if dozen == "1"
 
     puts
     headers = {
-        "apikey"     => "Imq3OntknXmbUGuN3IBOtMQCXn0usDq4",
+        "apikey"     => "UBGkWBn0wVZxzw94OWEnmGWp0n71cSpo",
     }
     response = HTTParty.get("https://api.securitytrails.com/v1/domain/#{d}/subdomains",
     :headers => headers
@@ -48,8 +50,8 @@ if dozen == "1"
     puts
 
 elsif dozen == "2"
-
-    puts "Example subdomain-list.txt"
+begin
+    puts "Example subdomain-list.txt".colorize(:color => :black, :background => :white)
     puts
     print "Enter List Domain.txt : "
     file = gets.chomp
@@ -58,48 +60,66 @@ elsif dozen == "2"
     puts
     
     data_file = File.open("#{file}", "r").read
+
+#debugger
     data1 = data_file.split("\n")
-    
-begin 
+
     data1.each do |line|
         newuri = URI::HTTP.build({:host => "#{line}"})
-        response = HTTParty.get("#{newuri}", timeout: 10)
+    begin
+        response = HTTParty.get(newuri, timeout: 5, :verify => false)
+        # puts newuri
 
-            case response.code 
-                when 200
-                    puts "OK           <= #{newuri}".yellow
-                    File.open("#{name_f}", "a+"){|file|file.write("#{newuri} => OK\n")}
+        if response.code == 200 
+            puts "#{newuri} => OK".yellow
+            File.open("#{name_f}","a+"){|file|file.write("#{newuri} => OK\n")}
+        
+        elsif response.code == 404
+            puts "#{newuri} => Not Found!!".red
+            File.open("#{name_f}","a+"){|file|file.write("#{newuri} => Not Found\n")} 
+        
+        elsif response.code == 403
+            puts "#{newuri} => Forbidden".blue
+            File.open("#{name_f}","a+"){|file|file.write("#{newuri} => Forbidden\n")}
+        
+        elsif response.code == 500
+            puts "#{newuri} => Server Error".red
+            File.open("#{name_f}","a+"){|file|file.write("#{newuri} => Server Error\n")}
+       
+        elsif response.code == 400
+            puts "#{newuri} => Bad Request".blue
+            File.open("#{name_f}","a+"){|file|file.write("#{newuri} => Bad Request\n")}
+       
+        elsif response.code == 302
+            puts "#{newuri} => Redirect".blue
+            File.open("#{name_f}","a+"){|file|file.write("#{newuri} => Redirect\n")}
+       
+        elsif response.code == 408
+            puts "#{newuri} => Time Out".red
+            File.open("#{name_f}","a+"){|file|file.write("#{newuri} => Time Out\n")}
+        
+        elsif response.code == 521
+            puts "#{newuri} => Server Down".red
+            File.open("#{name_f}","a+"){|file|file.write("#{newuri} => Server Down\n")}
 
-                when 404
-                    puts "Not Found!!    <= #{newuri}".blue
-                    # File.open("#{name_f}", "a+"){|file|file.write("#{newuri} => Not Found\n")}
-
-                when 403
-                    puts "Forbidden    <= #{newuri}".red
-                    File.open("#{name_f}", "a+"){|file|file.write("#{newuri} => Forbidden\n")}
-
-                when 400
-                    puts "Bad request  <= #{newuri}".green
-                    File.open("#{name_f}", "a+"){|file|file.write("#{newuri} => Bad Request\n")}
-
-                when 500 
-                    puts "Server error <= #{newuri}".blue
-                    File.open("#{name_f}", "a+"){|file|file.write("#{newuri} => Server Error\n")}
-
-                when 408 
-                    puts "Time out     <= #{newuri}".blue
-                    File.open("#{name_f}", "a+"){|file|file.write("#{newuri} => Time Out\n")} 
-		
-                when 302 
-                    puts "Redirect     <= #{newuri}".green
-                    File.open("#{name_f}", "a+"){|file|file.write("#{newuri} => Redirect\n")}   
-                 end
-            end
-        rescue
+        else 
+            puts "#{newuri} => Error".red
+            File.open("#{name_f}","a+"){|file|file.write("#{newuri} => Error\n")}
         end
+    rescue
+    rescue OpenSSL::SSL::SSLError
+        puts "SSL Error..."
+    rescue Errno::ECONNREFUSED
+        puts "Connection Refused!"    
+	end
+end
+
 	puts
-	puts "#{Dir.pwd}/#{name_f}".yellow
-	puts 
+	puts "File Saved => #{Dir.pwd}/#{name_f}".yellow
+    puts
+rescue Interrupt
+    puts "Leaving the program...".red
+end 
 else
     puts "Input Salah Jang!!".yellow
-end
+end 
