@@ -4,7 +4,7 @@ Make subdozen with simple program
 
 Subdozen is a tool for reconnaissance for a domain
 
-if there is a problem in subdozen , you can register on securitytrails and add apikey then edit the subdozen.rb file
+if there is a problem in subdomain scanning subdozen , you can register on securitytrails and add apikey then edit the subdozen.rb file
 
 #install
 
