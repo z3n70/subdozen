@@ -16,6 +16,7 @@ https://www.ruby-lang.org/id/documentation/installation/
 - gem install httparty
 - gem install colorize
 - gem install uri
+- gem install open-uri
 
 git clone https://github.com/z3n70/subdozen
 
