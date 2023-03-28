@@ -1,3 +1,5 @@
+Subdozen Update version 1.1 :D
+
 ![Alt text](https://github.com/z3n70/subdozen/blob/main/subdozen.png?raw=true "subdozen")
 
 Make subdozen with simple program
